@@ -1,17 +1,35 @@
 package com.Nj;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.Nj.code.Category;
+import com.Nj.code.DataRetriever;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DataRetriever dr = new DataRetriever();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        System.out.println("=== All categories ===");
+        List<Category> cats = dr.getAllCategories();
+        cats.forEach(System.out::println);
+
+        System.out.println("\n=== First page of products (page 1, size 5) ===");
+        dr.getProductList(1, 5).forEach(System.out::println);
+
+        System.out.println("\n=== Filter: product contains 'Laptop' ===");
+        dr.getProductsByCriteria("Laptop", null, null, null).forEach(System.out::println);
+
+        System.out.println("\n=== Filter: category contains 'Television' ===");
+        dr.getProductsByCriteria(null, "Television", null, null).forEach(System.out::println);
+
+        System.out.println("\n=== Filter + date range (after 2024-02-01) ===");
+        Instant after = LocalDateTime.of(2024,2,1,0,0).toInstant(ZoneOffset.UTC);
+        dr.getProductsByCriteria(null, null, after, null).forEach(System.out::println);
+
+        System.out.println("\n=== Filter + pagination: Smartphone in page 1 size 2 ===");
+        dr.getProductsByCriteria(null, "Smartphone", null, null, 1, 2).forEach(System.out::println);
     }
 }
