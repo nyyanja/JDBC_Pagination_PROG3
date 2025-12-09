@@ -1,8 +1,7 @@
-
 import com.Nj.code.Category;
 import com.Nj.code.DataRetriever;
 import com.Nj.code.Product;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -11,10 +10,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataRetrieverTest {
-    static DataRetriever dr;
 
-    @BeforeAll
-    static void setup() {
+    private DataRetriever dr;
+
+    @BeforeEach
+    void setup() {
         dr = new DataRetriever();
     }
 
