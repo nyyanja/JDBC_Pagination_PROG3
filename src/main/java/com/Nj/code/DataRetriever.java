@@ -33,7 +33,7 @@ public class DataRetriever {
     // Pagination: lire liste de produits
     public List<Product> getProductList(int page, int size) {
         List<Product> products = new ArrayList<>();
-        int offset = (Math.max(1, page) - 1) * Math.max(1, size); // sécurité: page>=1, size>=1
+        int offset = (Math.max(1, page) - 1) * Math.max(1, size);
 
         String sql = "SELECT id, name, price, creation_datetime FROM product ORDER BY id LIMIT ? OFFSET ?";
 
@@ -95,7 +95,7 @@ public class DataRetriever {
         return products;
     }
 
-    // 4) Filtre + pagination : on filtre d'abord, puis on applique LIMIT/OFFSET
+    // 4) Filtre + pagination
     public List<Product> getProductsByCriteria(
             String productName,
             String categoryName,

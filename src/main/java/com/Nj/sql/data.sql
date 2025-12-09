@@ -1,4 +1,4 @@
--- Insérer des produits
+
 INSERT INTO product (name, price, creation_datetime) VALUES
                                                          ('Lenovo ThinkPad X1', 1299.99, '2024-01-10 08:30:00'),
                                                          ('iPhone 15 Pro', 1199.00, '2024-02-15 10:00:00'),
