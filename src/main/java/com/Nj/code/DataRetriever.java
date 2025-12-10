@@ -24,9 +24,11 @@ public class DataRetriever {
             while (rs.next()) {
                 categories.add(new Category(rs.getInt("id"), rs.getString("name")));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return categories;
     }
 
@@ -48,6 +50,7 @@ public class DataRetriever {
                     products.add(mapRowToProduct(rs));
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,6 +63,7 @@ public class DataRetriever {
                                                String categoryName,
                                                Instant creationMin,
                                                Instant creationMax) {
+
         List<Product> products = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder(
@@ -78,6 +82,7 @@ public class DataRetriever {
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             int index = 1;
+
             if (productName != null) ps.setString(index++, "%" + productName + "%");
             if (categoryName != null) ps.setString(index++, "%" + categoryName + "%");
             if (creationMin != null) ps.setTimestamp(index++, Timestamp.from(creationMin));
@@ -88,6 +93,7 @@ public class DataRetriever {
                     products.add(mapRowToProduct(rs));
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -121,13 +127,13 @@ public class DataRetriever {
         if (creationMin != null) sql.append("AND p.creation_datetime >= ? ");
         if (creationMax != null) sql.append("AND p.creation_datetime <= ? ");
 
-        sql.append("ORDER BY p.id ");
-        sql.append("LIMIT ? OFFSET ?");
+        sql.append("ORDER BY p.id LIMIT ? OFFSET ?");
 
         try (Connection conn = db.getDBConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             int index = 1;
+
             if (productName != null) ps.setString(index++, "%" + productName + "%");
             if (categoryName != null) ps.setString(index++, "%" + categoryName + "%");
             if (creationMin != null) ps.setTimestamp(index++, Timestamp.from(creationMin));
@@ -141,6 +147,7 @@ public class DataRetriever {
                     products.add(mapRowToProduct(rs));
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -154,8 +161,8 @@ public class DataRetriever {
         String name = rs.getString("name");
         double price = rs.getDouble("price");
         Timestamp ts = rs.getTimestamp("creation_datetime");
-        Instant created = ts != null ? ts.toInstant() : null;
+        Instant created = (ts != null) ? ts.toInstant() : null;
+
         return new Product(id, name, price, created);
     }
 }
-
